@@ -48,8 +48,8 @@ Verify that a user can successfully complete the full checkout process with a pr
 * The user is taken to the checkout overview after clicking **Continue**.
 * `Sauce Labs Backpack` is displayed in the checkout overview.
 * The product name, description, and price match the selected cart item.
-* The payment information is displayed as `SauceCard #31337`.
-* The shipping information is displayed as `Free Pony Express Delivery!`.
+* The payment information is displayed.
+* The shipping information is displayed.
 * The item total is displayed as `$29.99`.
 * The tax is displayed as `$2.40`.
 * The total is displayed as `$32.39`.
