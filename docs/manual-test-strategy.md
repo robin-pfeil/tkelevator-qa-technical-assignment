@@ -35,18 +35,14 @@ Test cases were selected based on the following considerations:
 
 ## Selected Test Coverage
 
-| ID    | Test Case                                            | Business Workflow                   | Priority |
-| ----- | ---------------------------------------------------- | ----------------------------------- | -------- |
-| TC-01 | Successful login with valid credentials              | Authentication & Session Management | Critical |
-| TC-02 | Locked-out user cannot log in                        | Authentication & Session Management | Critical |
-| TC-03 | Add a product to the shopping cart                   | Shopping Cart Management            | Critical |
-| TC-04 | Add multiple products and remove one                 | Shopping Cart Management            | Critical |
-| TC-05 | Cart contents remain correct during navigation       | Shopping Cart Management            | Critical |
-| TC-06 | Complete a successful checkout                       | Checkout & Order Completion         | Critical |
-| TC-07 | Required checkout information is validated           | Checkout & Order Completion         | Critical |
-| TC-08 | Product details match the inventory listing          | Product Browsing & Discovery        | High     |
-| TC-09 | Products can be sorted correctly                     | Product Browsing & Discovery        | High     |
-| TC-10 | Navigate between application sections using the menu | Application Navigation              | Medium   |
+A total of **10 manual test cases** were selected based on the risk analysis and test selection criteria described above.
+
+The suite consists primarily of Critical test cases while also including High- and Medium-priority scenarios to provide broader functional coverage.
+
+The complete test-case overview and links to the individual test cases are available in the:
+
+**[Manual Test Case Index](../manual-tests/README.md)**
+
 
 ## Coverage Rationale
 
