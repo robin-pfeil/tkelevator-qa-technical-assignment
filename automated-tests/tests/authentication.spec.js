@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryListingPage } from '../pages/InventoryListingPage';
+import { users } from '../test-data/users';
 
 test.describe('Authentication', () => {
     let loginPage;
@@ -11,7 +12,7 @@ test.describe('Authentication', () => {
     });
 
     test('TC-01: successful login with valid credentials', async ({ page }) => {
-        await loginPage.login('standard_user', 'secret_sauce');
+        await loginPage.login(users.standard.username, users.standard.password);
         await expect(page).toHaveURL('/inventory.html');
 
         const inventoryListingPage = new InventoryListingPage(page);
@@ -26,7 +27,7 @@ test.describe('Authentication', () => {
     });
 
     test('TC-02: locked-out user cannot log in', async ({ page }) => {
-        await loginPage.login('locked_out_user', 'secret_sauce');
+        await loginPage.login(users.lockedOut.username, users.lockedOut.password);
         await expect(page).toHaveURL('/');
         await expect(loginPage.errorMessage).toBeVisible();
         await expect(loginPage.errorMessage).toHaveText('Epic sadface: Sorry, this user has been locked out.');
