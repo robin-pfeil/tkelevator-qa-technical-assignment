@@ -46,6 +46,10 @@ export class InventoryListingPage {
         await product.getByRole('button', { name: 'Add to cart' }).click();
     }
 
+    async openProductDetails(name) {
+        await this.getProduct(name).getByTestId(/-title-link$/).click();
+    }
+
     async openCart() {
         await this.cartIcon.click();
     }

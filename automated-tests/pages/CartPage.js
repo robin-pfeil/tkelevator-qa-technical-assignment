@@ -5,6 +5,7 @@ export class CartPage {
     constructor(page) {
         this.page = page;
         this.cartList = page.getByTestId('cart-list');
+        this.continueShoppingButton = page.getByRole('button', { name: 'Continue Shopping' });
     }
 
     async goto() {
@@ -37,5 +38,9 @@ export class CartPage {
             description: await this.getProductDescription(name).textContent(),
             price: await this.getProductPrice(name).textContent(),
         };
+    }
+
+    async continueShopping() {
+        await this.continueShoppingButton.click();
     }
 }
