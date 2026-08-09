@@ -39,3 +39,7 @@ The specific business workflows, risks, priorities, and resulting test coverage 
 The goal of this project is not simply to create the largest possible test suite.
 
 The focus is on creating a **small, meaningful, maintainable, and risk-focused test suite** that provides confidence in the application's most important user journeys.
+
+## Project Documentation
+
+* [Business Workflows](docs/business-workflows.md) — Identification of the application's most important business workflows and primary end-to-end user journey.
