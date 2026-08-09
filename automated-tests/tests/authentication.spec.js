@@ -13,6 +13,15 @@ test.describe('Authentication', () => {
         await inventoryListingPage.expectReady();
     });
 
+    test('TC-11: unsuccessful login with invalid credentials', async ({ page }) => {
+        const loginPage = new LoginPage(page);
+        await loginPage.goto();
+        await loginPage.login('invalid_user', 'mot_so_secret_sauce');
+        await expect(page).toHaveURL('/');
+        await expect(loginPage.errorMessage).toBeVisible();
+        await expect(loginPage.errorMessage).toHaveText('Epic sadface: Username and password do not match any user in this service');
+    });
+
     test('TC-02: locked-out user cannot log in', async ({ page }) => {
         const loginPage = new LoginPage(page);
         await loginPage.goto();
