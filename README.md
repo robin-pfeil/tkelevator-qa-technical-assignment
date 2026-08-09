@@ -43,3 +43,4 @@ The focus is on creating a **small, meaningful, maintainable, and risk-focused t
 ## Project Documentation
 
 * [Business Workflows](docs/business-workflows.md) — Identification of the application's most important business workflows and primary end-to-end user journey.
+* [Risk Analysis](docs/risk-analysis.md) — Workflow-level risk assessment and prioritization based on business impact, user impact, dependencies, and regression value.
