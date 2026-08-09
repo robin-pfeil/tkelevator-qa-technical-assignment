@@ -4,7 +4,7 @@ export class InventoryListingPage {
 
     constructor(page) {
         this.page = page;
-        this.inventoryList = this.page.locator('data-test=inventory-list');
+        this.inventoryList = page.getByTestId('inventory-list');
     }
 
     async goto() {
