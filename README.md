@@ -45,3 +45,4 @@ The focus is on creating a **small, meaningful, maintainable, and risk-focused t
 * [Business Workflows](docs/business-workflows.md) — Identification of the application's most important business workflows and primary end-to-end user journey.
 * [Risk Analysis](docs/risk-analysis.md) — Workflow-level risk assessment and prioritization based on business impact, user impact, dependencies, and regression value.
 * [Manual Test Strategy](docs/manual-test-strategy.md) — Risk-based approach, selection criteria, and rationale for the manual test coverage.
+* [Manual Test Cases](manual-tests/README.md) — Overview and individual manual test cases covering the selected SauceDemo workflows.
