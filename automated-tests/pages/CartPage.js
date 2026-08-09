@@ -1,24 +1,22 @@
 import { expect } from '@playwright/test';
 
-export class InventoryListingPage {
+export class CartPage {
 
     constructor(page) {
         this.page = page;
-        this.inventoryList = page.getByTestId('inventory-list');
-        this.cartIcon = page.getByTestId('shopping-cart-link');
-        this.cartBadge = this.cartIcon.getByTestId('shopping-cart-badge');
+        this.cartList = page.getByTestId('cart-list');
     }
 
     async goto() {
-        await this.page.goto('/inventory.html');
+        await this.page.goto('/cart.html');
     }
 
     async expectReady() {
-        await expect(this.inventoryList).toBeVisible();
+        await expect(this.cartList).toBeVisible();
     }
 
     getProduct(name) {
-        return this.inventoryList.getByTestId('inventory-item').filter({ hasText: name });
+        return this.cartList.getByTestId('inventory-item').filter({ hasText: name });
     }
 
     getProductName(name) {
@@ -39,14 +37,5 @@ export class InventoryListingPage {
             description: await this.getProductDescription(name).textContent(),
             price: await this.getProductPrice(name).textContent(),
         };
-    }
-
-    async addProductToCart(name) {
-        const product = this.getProduct(name);
-        await product.getByRole('button', { name: 'Add to cart' }).click();
-    }
-
-    async openCart() {
-        await this.cartIcon.click();
     }
 }
