@@ -9,6 +9,7 @@ export class CheckoutInformationPage {
         this.postalCodeInput = page.getByPlaceholder('Zip/Postal Code');
         this.continueButton = page.getByRole('button', { name: 'Continue' });
         this.cancelButton = page.getByRole('button', { name: 'Cancel' });
+        this.errorMessage = page.getByTestId('error');
     }
 
     async expectReady() {
