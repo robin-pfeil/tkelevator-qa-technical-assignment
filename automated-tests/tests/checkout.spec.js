@@ -24,14 +24,16 @@ test.describe('Checkout Process', () => {
         const firstName = 'John';
         const lastName = 'Doe';
         const postalCode = '10115';
-        const inventoryProductDetails = await inventoryListingPage.getProductDetails(productName);
+
+        const inventoryProduct = inventoryListingPage.getProduct(productName);
+        const inventoryProductDetails = await inventoryProduct.getProductDetails();
 
         await inventoryListingPage.addProductToCart(productName);
         await inventoryListingPage.openCart();
 
         const cartPage = new CartPage(page);
         await cartPage.expectReady();
-        await expect(cartPage.getProduct(productName)).toBeVisible();
+        await expect(cartPage.getProduct(productName).root).toBeVisible();
         await cartPage.checkout();
 
         const checkoutInformationPage = new CheckoutInformationPage(page);
@@ -42,13 +44,12 @@ test.describe('Checkout Process', () => {
         const checkoutOverviewPage = new CheckoutOverviewPage(page);
         await checkoutOverviewPage.expectReady();
 
-        const checkoutProductDetails = await checkoutOverviewPage.getProductDetails(productName);
+        const checkoutProduct = checkoutOverviewPage.getProduct(productName);
+        const checkoutProductDetails = await checkoutProduct.getProductDetails();
 
-        expect(checkoutProductDetails.name).toBe(inventoryProductDetails.name);
-        expect(checkoutProductDetails.description).toBe(inventoryProductDetails.description);
-        expect(checkoutProductDetails.price).toBe(inventoryProductDetails.price);
+        expect(checkoutProductDetails).toEqual(inventoryProductDetails);
 
-        const productPrice = parseFloat(inventoryProductDetails.price.replace('$', ''));
+        const productPrice = parseFloat(checkoutProductDetails.price.replace('$', ''));
         const itemTotal = await checkoutOverviewPage.getItemTotalValue();
         const tax = await checkoutOverviewPage.getTaxValue();
         const total = await checkoutOverviewPage.getTotalValue();
@@ -61,6 +62,7 @@ test.describe('Checkout Process', () => {
 
         const checkoutCompletePage = new CheckoutCompletePage(page);
         await checkoutCompletePage.expectReady();
+
         await expect(checkoutCompletePage.successHeading).toBeVisible();
         await expect(checkoutCompletePage.dispatchMessage).toBeVisible();
         await expect(checkoutCompletePage.backHomeButton).toBeVisible();
