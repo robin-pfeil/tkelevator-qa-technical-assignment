@@ -3,7 +3,7 @@ import { ProductDetailsPage } from '../pages/ProductDetailsPage';
 import { CartPage } from '../pages/CartPage';
 
 test.describe('Shopping Cart', () => {
-    test('TC-03: add a product to the cart and verify it is displayed in the cart', async ({ page, authenticatedInventoryPage }) => {
+    test('TC-03: add a product to the cart and verify it is displayed in the cart @smoke @regression', async ({ page, authenticatedInventoryPage }) => {
         const productName = 'Sauce Labs Backpack';
         const inventoryListingPage = authenticatedInventoryPage;
 
@@ -25,7 +25,7 @@ test.describe('Shopping Cart', () => {
         expect(cartProductDetails).toEqual(inventoryProductDetails);
     });
 
-    test('TC-05: cart contents remain correct during navigation', async ({ page, authenticatedInventoryPage }) => {
+    test('TC-05: cart contents remain correct during navigation @regression', async ({ page, authenticatedInventoryPage }) => {
         const productName = 'Sauce Labs Backpack';
         const navigationProductName = 'Sauce Labs Bike Light';
 

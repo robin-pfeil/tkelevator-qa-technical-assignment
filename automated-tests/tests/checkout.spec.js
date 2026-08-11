@@ -5,7 +5,7 @@ import { CheckoutOverviewPage } from '../pages/CheckoutOverviewPage';
 import { CheckoutCompletePage } from '../pages/CheckoutCompletePage';
 
 test.describe('Checkout Process', () => {
-    test('TC-06: user can complete checkout process', async ({ page, authenticatedInventoryPage }) => {
+    test('TC-06: user can complete checkout process @smoke @regression', async ({ page, authenticatedInventoryPage }) => {
         const inventoryListingPage = authenticatedInventoryPage;
 
         const productName = 'Sauce Labs Backpack';
@@ -83,7 +83,7 @@ test.describe('Checkout Process', () => {
     ];
 
     for (const scenario of checkoutValidationScenarios) {
-        test(`TC-07: validates required ${scenario.field}`, async ({ page, authenticatedInventoryPage }) => {
+        test(`TC-07: validates required ${scenario.field} @regression`, async ({ page, authenticatedInventoryPage }) => {
             const inventoryListingPage = authenticatedInventoryPage;
             const productName = 'Sauce Labs Backpack';
             
