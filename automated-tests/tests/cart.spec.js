@@ -19,34 +19,35 @@ test.describe('Shopping Cart', () => {
 
     test('TC-03: add a product to the cart and verify it is displayed in the cart', async ({ page }) => {
         const productName = 'Sauce Labs Backpack';
-        const inventoryProductDetails = await inventoryListingPage.getProductDetails(productName);
+        
+        const inventoryProduct = inventoryListingPage.getProduct(productName);
+        const inventoryProductDetails = await inventoryProduct.getProductDetails();
 
         await inventoryListingPage.addProductToCart(productName);
-        await expect(inventoryListingPage.getProduct(productName).getByRole('button', { name: 'Remove' })).toBeVisible();
+        await expect(inventoryProduct.root.getByRole('button', { name: 'Remove' })).toBeVisible();
         await expect(inventoryListingPage.cartBadge).toHaveText('1');
         await inventoryListingPage.openCart();
 
         const cartPage = new CartPage(page);
         await cartPage.expectReady();
-        await expect(cartPage.getProduct(productName)).toBeVisible();
 
-        const cartProductDetails = await cartPage.getProductDetails(productName);
+        const cartProduct = cartPage.getProduct(productName);
+        await expect(cartProduct.root).toBeVisible();
+        const cartProductDetails = await cartProduct.getProductDetails();
 
-        expect(cartProductDetails.name).toBe(inventoryProductDetails.name);
-        expect(cartProductDetails.description).toBe(inventoryProductDetails.description);
-        expect(cartProductDetails.price).toBe(inventoryProductDetails.price);
+        expect(cartProductDetails).toEqual(inventoryProductDetails);
     });
 
     test('TC-05: cart contents remain correct during navigation', async ({ page }) => {
-        const cartProductName = 'Sauce Labs Backpack';
+        const productName = 'Sauce Labs Backpack';
         const navigationProductName = 'Sauce Labs Bike Light';
 
-        await inventoryListingPage.addProductToCart(cartProductName);
+        await inventoryListingPage.addProductToCart(productName);
         await inventoryListingPage.openCart();
 
         const cartPage = new CartPage(page);
         await cartPage.expectReady();
-        await expect(cartPage.getProduct(cartProductName)).toBeVisible();
+        await expect(cartPage.getProduct(productName).root).toBeVisible();
         
         await cartPage.continueShopping();
         await inventoryListingPage.expectReady();
@@ -55,10 +56,12 @@ test.describe('Shopping Cart', () => {
         const productDetailsPage = new ProductDetailsPage(page);
         await productDetailsPage.expectReady();
         await productDetailsPage.backToProducts();
-        await inventoryListingPage.expectReady();
 
+        await inventoryListingPage.expectReady();
         await expect(inventoryListingPage.cartBadge).toHaveText('1');
         await inventoryListingPage.openCart();
-        await expect(cartPage.getProduct(cartProductName)).toBeVisible();
+
+        await cartPage.expectReady();
+        await expect(cartPage.getProduct(productName).root).toBeVisible();
     });
 });

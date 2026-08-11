@@ -1,9 +1,10 @@
 import { expect } from '@playwright/test';
+import { ProductItem } from '../components/ProductItem';
 
 export class CheckoutOverviewPage {
     constructor(page) {
         this.page = page;
-        this.cartList = page.getByTestId('cart-list');
+        this.productList = page.getByTestId('cart-list');
         this.itemTotalField = page.getByTestId('subtotal-label');
         this.taxField = page.getByTestId('tax-label');
         this.totalField = page.getByTestId('total-label');
@@ -12,23 +13,11 @@ export class CheckoutOverviewPage {
     }
 
     async expectReady() {
-        await expect(this.cartList).toBeVisible();
+        await expect(this.productList).toBeVisible();
     }
 
-    getProduct(name) {
-        return this.cartList.getByTestId('inventory-item').filter({ hasText: name });
-    }
-
-    getProductName(name) {
-        return this.getProduct(name).getByTestId('inventory-item-name');
-    }
-
-    getProductDescription(name) {
-        return this.getProduct(name).getByTestId('inventory-item-desc');
-    }
-
-    getProductPrice(name) {
-        return this.getProduct(name).getByTestId('inventory-item-price');
+    getProduct(productName) {
+        return new ProductItem(this.productList.getByTestId('inventory-item').filter({ hasText: productName }));
     }
 
     async getItemTotalValue() {
@@ -46,11 +35,11 @@ export class CheckoutOverviewPage {
         return parseFloat(text.replace('Total: $', ''));
     }
 
-    async getProductDetails(name) {
+    async getProductDetails(productName) {
         return {
-            name: await this.getProductName(name).textContent(),
-            description: await this.getProductDescription(name).textContent(),
-            price: await this.getProductPrice(name).textContent(),
+            name: await this.getProductName(productName).textContent(),
+            description: await this.getProductDescription(productName).textContent(),
+            price: await this.getProductPrice(productName).textContent(),
         };
     }
 
