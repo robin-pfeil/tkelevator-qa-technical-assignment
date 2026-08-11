@@ -19,7 +19,7 @@ export class CartPage {
     }
 
     getProduct(productName) {
-        return new ProductItem(this.productList, productName);
+        return new ProductItem(this.productList.getByTestId('inventory-item').filter({ hasText: productName }));
     }
 
     async checkout() {

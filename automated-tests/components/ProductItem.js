@@ -1,6 +1,6 @@
 export class ProductItem {
-    constructor(productList, productName) {
-        this.root = productList.getByTestId('inventory-item').filter({ hasText: productName });
+    constructor(productLocator) {
+        this.root = productLocator;
         this.name = this.root.getByTestId('inventory-item-name');
         this.description = this.root.getByTestId('inventory-item-desc');
         this.price = this.root.getByTestId('inventory-item-price');
