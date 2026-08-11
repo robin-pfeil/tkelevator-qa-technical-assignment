@@ -1,10 +1,11 @@
 import { expect } from '@playwright/test';
+import { ProductItem } from '../components/ProductItem';
 
 export class InventoryListingPage {
 
     constructor(page) {
         this.page = page;
-        this.inventoryList = page.getByTestId('inventory-list');
+        this.productList = page.getByTestId('inventory-list');
         this.cartIcon = page.getByTestId('shopping-cart-link');
         this.cartBadge = this.cartIcon.getByTestId('shopping-cart-badge');
     }
@@ -14,40 +15,21 @@ export class InventoryListingPage {
     }
 
     async expectReady() {
-        await expect(this.inventoryList).toBeVisible();
+        await expect(this.productList).toBeVisible();
     }
 
-    getProduct(name) {
-        return this.inventoryList.getByTestId('inventory-item').filter({ hasText: name });
+    getProduct(productName) {
+        return new ProductItem(this.productList, productName);
     }
 
-    getProductName(name) {
-        return this.getProduct(name).getByTestId('inventory-item-name');
+    async addProductToCart(productName) {
+        const product = this.getProduct(productName);
+        await product.root.getByRole('button', { name: 'Add to cart' }).click();
     }
 
-    getProductDescription(name) {
-        return this.getProduct(name).getByTestId('inventory-item-desc');
-    }
-
-    getProductPrice(name) {
-        return this.getProduct(name).getByTestId('inventory-item-price');
-    }
-
-    async getProductDetails(name) {
-        return {
-            name: await this.getProductName(name).textContent(),
-            description: await this.getProductDescription(name).textContent(),
-            price: await this.getProductPrice(name).textContent(),
-        };
-    }
-
-    async addProductToCart(name) {
-        const product = this.getProduct(name);
-        await product.getByRole('button', { name: 'Add to cart' }).click();
-    }
-
-    async openProductDetails(name) {
-        await this.getProduct(name).getByTestId(/-title-link$/).click();
+    async openProductDetails(productName) {
+        const product = this.getProduct(productName);
+        await product.root.getByTestId(/-title-link$/).click();
     }
 
     async openCart() {
