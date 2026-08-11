@@ -1,26 +1,15 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryListingPage } from '../pages/InventoryListingPage';
+import { test, expect } from '../fixtures/testFixtures';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutInformationPage } from '../pages/CheckoutInformationPage';
 import { CheckoutOverviewPage } from '../pages/CheckoutOverviewPage';
 import { CheckoutCompletePage } from '../pages/CheckoutCompletePage';
-import { users } from '../test-data/users';
 
 test.describe('Checkout Process', () => {
-    let inventoryListingPage;
-    const productName = 'Sauce Labs Backpack';
+    test('TC-06: user can complete checkout process', async ({ page, authenticatedInventoryPage }) => {
+        const inventoryListingPage = authenticatedInventoryPage;
 
-    test.beforeEach(async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.goto();
-        await loginPage.login(users.standard.username, users.standard.password);
+        const productName = 'Sauce Labs Backpack';
 
-        inventoryListingPage = new InventoryListingPage(page);
-        await inventoryListingPage.expectReady();
-    });
-
-    test('TC-06: user can complete checkout process', async ({ page }) => {
         const firstName = 'John';
         const lastName = 'Doe';
         const postalCode = '10115';
@@ -94,7 +83,10 @@ test.describe('Checkout Process', () => {
     ];
 
     for (const scenario of checkoutValidationScenarios) {
-        test(`TC-07: validates required ${scenario.field}`, async ({ page }) => {
+        test(`TC-07: validates required ${scenario.field}`, async ({ page, authenticatedInventoryPage }) => {
+            const inventoryListingPage = authenticatedInventoryPage;
+            const productName = 'Sauce Labs Backpack';
+            
             await inventoryListingPage.addProductToCart(productName);
             await inventoryListingPage.openCart();
 
