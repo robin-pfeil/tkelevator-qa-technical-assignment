@@ -1,25 +1,12 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryListingPage } from '../pages/InventoryListingPage';
+import { test, expect } from '../fixtures/testFixtures';
 import { ProductDetailsPage } from '../pages/ProductDetailsPage';
 import { CartPage } from '../pages/CartPage';
-import { users } from '../test-data/users';
 
 test.describe('Shopping Cart', () => {
-    let inventoryListingPage;
-
-    test.beforeEach(async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.goto();
-        await loginPage.login(users.standard.username, users.standard.password);
-
-        inventoryListingPage = new InventoryListingPage(page);
-        await inventoryListingPage.expectReady();
-    });
-
-    test('TC-03: add a product to the cart and verify it is displayed in the cart', async ({ page }) => {
+    test('TC-03: add a product to the cart and verify it is displayed in the cart', async ({ page, authenticatedInventoryPage }) => {
         const productName = 'Sauce Labs Backpack';
-        
+        const inventoryListingPage = authenticatedInventoryPage;
+
         const inventoryProduct = inventoryListingPage.getProduct(productName);
         const inventoryProductDetails = await inventoryProduct.getProductDetails();
 
@@ -38,9 +25,11 @@ test.describe('Shopping Cart', () => {
         expect(cartProductDetails).toEqual(inventoryProductDetails);
     });
 
-    test('TC-05: cart contents remain correct during navigation', async ({ page }) => {
+    test('TC-05: cart contents remain correct during navigation', async ({ page, authenticatedInventoryPage }) => {
         const productName = 'Sauce Labs Backpack';
         const navigationProductName = 'Sauce Labs Bike Light';
+
+        const inventoryListingPage = authenticatedInventoryPage;
 
         await inventoryListingPage.addProductToCart(productName);
         await inventoryListingPage.openCart();
