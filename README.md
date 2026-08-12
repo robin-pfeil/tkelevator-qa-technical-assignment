@@ -40,6 +40,24 @@ The goal of this project is not simply to create the largest possible test suite
 
 The focus is on creating a **small, meaningful, maintainable, and risk-focused test suite** that provides confidence in the application's most important user journeys.
 
+## Architecture Summary
+
+* Tests contain business workflows and assertions.
+* Page objects contain page-specific locators and actions.
+* `ProductItem` models reusable product UI structure.
+* `authenticatedInventoryPage` provides shared authenticated setup.
+* Test data is centralized in `test-data/`.
+* GitHub Actions runs the regression suite and uploads the HTML report.
+
+## Assumptions
+
+* SauceDemo is treated as an e-commerce application whose primary user goal is successful order completion.
+* `standard_user` represents the normal happy-path user.
+* Product names are unique within the current application.
+* Product data should remain consistent across inventory, cart, and checkout.
+* Chromium coverage is sufficient for the scope of this assignment.
+* Observed pricing and tax behavior is treated as expected behavior unless otherwise specified.
+
 ## Project Documentation
 
 * [Business Workflows](docs/business-workflows.md) — Identification of the application's most important business workflows and primary end-to-end user journey.
